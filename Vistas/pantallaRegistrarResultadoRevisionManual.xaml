@@ -1,0 +1,25 @@
+<Window x:Class="Vistas.pantallaRegistrarResultadoRevisionManual"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Registrar Resultado Revisión Manual" Height="350" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Registrar Resultado de la Revisión Manual"
+                   FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Top">
+            <Label Content="Resultado:"/>
+            <TextBox Name="txtResultado" Height="80" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <Label Content="Observaciones:"/>
+            <TextBox Name="txtObservaciones" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Name="btnAceptar" Content="Aceptar" Width="100" Margin="0,0,10,0" Click="btnAceptar_Click"/>
+            <Button Name="btnCancelar" Content="Cancelar" Width="100" Click="btnCancelar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
