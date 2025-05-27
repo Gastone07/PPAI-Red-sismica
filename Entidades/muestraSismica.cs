@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class muestraSismica
+    internal class MuestraSismica
     {
         public DateTime fechaHoraMuestra { get; set; }
     }

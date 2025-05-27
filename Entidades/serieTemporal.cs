@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class serieTemporal
+    internal class SerieTemporal
     {
         public int condicionAlarma { get; set; }
 

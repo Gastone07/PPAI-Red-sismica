@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class usuario
+    internal class Usuario
     {
         public string contraseña { get; set; }
 

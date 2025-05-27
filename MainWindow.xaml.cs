@@ -29,8 +29,6 @@ namespace PPAI_REDSISMICA
 
             pantalla.Show(); // Mostrar la pantalla
 
-            //var controlador = new controladorRegistrarResultadoRevisionManual();
-            //controlador.habilitar();
         }
 
         private void btnTexto1_Click(object sender, RoutedEventArgs e)

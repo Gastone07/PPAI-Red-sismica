@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class detalleMuestraSismica
+    internal class DetalleMuestraSismica
     {
         public int valor { get; set; }
     }

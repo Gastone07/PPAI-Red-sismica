@@ -10,16 +10,18 @@ namespace Vistas
         private controladorRegistrarResultadoRevisionManual gestor;
 
         #endregion
+        public pantallaRegistrarResultadoRevisionManual()
+        {
+            habilitar();
+            gestor = new controladorRegistrarResultadoRevisionManual(this);
+            gestor.registrarResultadoDeRevisionManual();
+        }
 
         public void habilitar()
         {
             InitializeComponent();
         }
-        public pantallaRegistrarResultadoRevisionManual()
-        {
-            habilitar();
-            gestor = new controladorRegistrarResultadoRevisionManual(this);
-        }
+       
         private void btnAceptar_Click(object sender, RoutedEventArgs e)
         {
             // Aquí puedes agregar la lógica para procesar el resultado y observaciones

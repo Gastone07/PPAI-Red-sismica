@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class tipoDeDato
+    internal class TipoDeDato
     {
         public string denominacion { get; set; }
 

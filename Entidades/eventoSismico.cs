@@ -1,6 +1,6 @@
 using System;
 
-public class eventoSismico
+public class EventoSismico
 {
     public DateTime FechaHoraFin { get; set; }
     public DateTime FechaHoraOcurrencia { get; set; }
