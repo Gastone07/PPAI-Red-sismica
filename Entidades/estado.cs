@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class Estado
+    public class Estado
     {
         public string ambito { get; set; }
         public string nombreEstado { get; set; }
+
+        
     }
 }

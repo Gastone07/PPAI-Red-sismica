@@ -7,7 +7,9 @@ namespace Vistas
     {
         #region atributos
 
-        private controladorRegistrarResultadoRevisionManual gestor;
+        public controladorRegistrarResultadoRevisionManual gestor;
+        public List<EventoSismico> eventosSismicos = new List<EventoSismico>();
+
 
         #endregion
         public pantallaRegistrarResultadoRevisionManual()
@@ -21,7 +23,7 @@ namespace Vistas
         {
             InitializeComponent();
         }
-       
+
         private void btnAceptar_Click(object sender, RoutedEventArgs e)
         {
             // Aquí puedes agregar la lógica para procesar el resultado y observaciones
@@ -35,5 +37,12 @@ namespace Vistas
             this.DialogResult = false;
             this.Close();
         }
+
+        public void presentarEventosSismicosPendientesDeRevision(List<EventoSismico> eventosSismicos)
+        {
+            // Asume que tienes un DataGrid llamado "dgEventosSismicos" en tu XAML
+            dgEventosSismicos.ItemsSource = eventosSismicos;
+        }
+
     }
 }

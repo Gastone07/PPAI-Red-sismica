@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class CambioEstado
+    public class CambioEstado
     {
         public DateTime fechaHoraInicio { get; set; }
 
         public DateTime fechaHoraFin { get; set; }
 
+        public required Estado estado { get; set; }
     }
 }

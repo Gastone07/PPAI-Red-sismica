@@ -1,25 +1,36 @@
 <Window x:Class="Vistas.pantallaRegistrarResultadoRevisionManual"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Registrar Resultado Revisión Manual" Height="350" Width="500"
-        WindowStartupLocation="CenterScreen">
-    <Grid Margin="20">
+        Title="Registrar Resultado de Revisión Manual" Height="450" Width="800">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Registrar Resultado de la Revisión Manual"
-                   FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
-        <StackPanel Grid.Row="1" VerticalAlignment="Top">
-            <Label Content="Resultado:"/>
-            <TextBox Name="txtResultado" Height="80" AcceptsReturn="True" TextWrapping="Wrap"/>
-            <Label Content="Observaciones:"/>
-            <TextBox Name="txtObservaciones" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Name="btnAceptar" Content="Aceptar" Width="100" Margin="0,0,10,0" Click="btnAceptar_Click"/>
-            <Button Name="btnCancelar" Content="Cancelar" Width="100" Click="btnCancelar_Click"/>
+        <DataGrid x:Name="dgEventosSismicos"
+                  Grid.Row="0"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  Margin="0,0,0,10" Background="Yellow" BorderBrush="#FF688CAF" Foreground="#FF5B5B5B">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Fecha/Hora Ocurrencia" Binding="{Binding FechaHoraOcurrencia, StringFormat='dd/MM/yyyy HH:mm'}" Width="*" />
+                <DataGridTextColumn Header="Fecha/Hora Fin" Binding="{Binding FechaHoraFin, StringFormat='dd/MM/yyyy HH:mm'}" Width="*" />
+                <DataGridTextColumn Header="Latitud Epicentro" Binding="{Binding LatitudEpicentro}" Width="*" />
+                <DataGridTextColumn Header="Longitud Epicentro" Binding="{Binding LongitudEpicentro}" Width="*" />
+                <DataGridTextColumn Header="Latitud Hipocentro" Binding="{Binding LatitudHipocentro}" Width="*" />
+                <DataGridTextColumn Header="Longitud Hipocentro" Binding="{Binding LongitudHipocentro}" Width="*" />
+                <DataGridTextColumn Header="Magnitud" Binding="{Binding ValorMagnitud}" Width="*" />
+                <DataGridTextColumn Header="Estado Actual" Binding="{Binding estadoActual.nombreEstado}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnAceptar" Content="Aceptar" Width="100" Margin="0,0,10,0" Click="btnAceptar_Click" RenderTransformOrigin="-1.816,-0.233"/>
+            <Button x:Name="btnCancelar" Content="Cancelar" Width="100" Click="btnCancelar_Click"/>
         </StackPanel>
     </Grid>
 </Window>
