@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class Usuario
+    public class Usuario
     {
         public string contraseña { get; set; }
 
         public string nombreUsuario { get; set; }
+
+        public Usuario(string nombreUsuario, string contraseña)
+        {
+            this.nombreUsuario = nombreUsuario;
+            this.contraseña = contraseña;
+        }
     }
 }

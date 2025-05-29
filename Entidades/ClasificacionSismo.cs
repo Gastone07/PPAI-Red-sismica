@@ -10,6 +10,14 @@ namespace PPAI_REDSISMICA.Entidades
     {
         public int kmProfundidadDesde { get; set; }
         public int kmProfundidadHasta { get; set; }
-        public string nombre { get; set; }  
+        public string nombre { get; set; }
+
+
+        public ClasificacionSismo(int kmProfundidadDesde, int kmProfundidadHasta, string nombre)
+        {
+            this.kmProfundidadDesde = kmProfundidadDesde;
+            this.kmProfundidadHasta = kmProfundidadHasta;
+            this.nombre = nombre;
+        }
     }
 }

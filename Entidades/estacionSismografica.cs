@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class EstacionSismografica
+    public class EstacionSismografica
     {
         public int codigoEstacion { get; set; }
 
@@ -22,6 +22,17 @@ namespace PPAI_REDSISMICA.Entidades
 
         public int nroCerticacionAdquisicion { get; set; }  
 
+
+        public EstacionSismografica(int codigoEstacion, string documentoCertificacionAdq, DateTime fechaSolicitudCertificacion, int latitud, int longitud, string nombre, int nroCerticacionAdquisicion)
+        {
+            this.codigoEstacion = codigoEstacion;
+            this.documentoCertificacionAdq = documentoCertificacionAdq;
+            this.fechaSolicitudCertificacion = fechaSolicitudCertificacion;
+            this.latitud = latitud;
+            this.longitud = longitud;
+            this.nombre = nombre;
+            this.nroCerticacionAdquisicion = nroCerticacionAdquisicion;
+        }
 
     }
 }

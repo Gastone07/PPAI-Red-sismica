@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class TipoDeDato
+    public class TipoDeDato
     {
         public string denominacion { get; set; }
 
-        public string nombreUnidadMedida { get; set; }  
+        public string nombreUnidadMedida { get; set; }
 
         public int valorUmbral { get; set; }
+
+        public TipoDeDato(string denominacion, string nombreUnidadMedida, int valorUmbral)
+        {
+            this.denominacion = denominacion;
+            this.nombreUnidadMedida = nombreUnidadMedida;
+            this.valorUmbral = valorUmbral;
+        }
     }
 }

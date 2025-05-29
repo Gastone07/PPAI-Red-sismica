@@ -11,12 +11,16 @@ namespace PPAI_REDSISMICA.Entidades
         public string ambito { get; set; }
         public string nombreEstado { get; set; }
 
-        public static Estado sosEstadoBloqueado()
+        public Estado(string ambito, string nombreEstado)
         {
-            // Simulamos la búsqueda del estado bloqueado en una lista de estados
-            // En un caso real, esto podría ser una consulta a una base de datos o una lista estática
-            return new Estado { ambito = "Estado", nombreEstado = "Bloqueado" };
+            this.ambito = ambito;
+            this.nombreEstado = nombreEstado;
         }
 
+        public static Estado sosEstadoBloqueado()
+        {
+            // Implementación aquí
+            throw new NotImplementedException();
+        }
     }
 }

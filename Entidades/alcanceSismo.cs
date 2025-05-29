@@ -10,5 +10,14 @@ namespace PPAI_REDSISMICA.Entidades
     {
         public string descripcion { get; set; }
         public string nombre { get; set; }
+
+        public AlcanceSismo(string nombre, string descripcion)
+        {
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+        }
     }
+
+
+
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class SerieTemporal
+    public class SerieTemporal
     {
         public int condicionAlarma { get; set; }
 
@@ -15,5 +15,13 @@ namespace PPAI_REDSISMICA.Entidades
         public DateTime fechaHoraRegistro { get; set; }
 
         public int frecuenciaMuestreo { get; set; }
+
+        public SerieTemporal(int condicionAlarma, DateTime fechaHoraInicioRegistroMuestras, DateTime fechaHoraRegistro, int frecuenciaMuestreo)
+        {
+            this.condicionAlarma = condicionAlarma;
+            this.fechaHoraInicioRegistroMuestras = fechaHoraInicioRegistroMuestras;
+            this.fechaHoraRegistro = fechaHoraRegistro;
+            this.frecuenciaMuestreo = frecuenciaMuestreo;
+        }
     }
 }
