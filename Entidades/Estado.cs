@@ -17,10 +17,48 @@ namespace PPAI_REDSISMICA.Entidades
             this.nombreEstado = nombreEstado;
         }
 
-        public static Estado sosEstadoBloqueado()
+        public Estado()
         {
-            // Implementación aquí
-            throw new NotImplementedException();
+            // Constructor por defecto
+        }
+
+        public static Estado sosEstadoBloqueado(List<Estado> estados)
+        {
+            foreach (var estado in estados)
+            {
+                if (estado.esAmbitoEvento())
+                {
+                    if (estado.esEstadoBloqueado())
+                    {
+                        return estado; // Retorna el estado bloqueado encontrado
+                    }
+                }
+            }
+            return new Estado(); // Si no se encuentra el estado bloqueado
+        }
+
+        public bool esAmbitoEvento()
+        {
+            if (this.ambito == "evento")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool esEstadoBloqueado()
+        {
+            if (this.nombreEstado == "Bloqueado")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

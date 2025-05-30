@@ -36,82 +36,19 @@ public class EventoSismico
         this.estadoActual = estadoActual;
     }
 
-    public static void esPendienteDeRevision(List<EventoSismico> eventosSismicos)
+    public static List<EventoSismico> esPendienteDeRevision(List<EventoSismico> eventosSismicos)
     {
-        crearEventosInicio(eventosSismicos);
+        var eventosPendientes = new List<EventoSismico>();
+        foreach (var evento in eventosSismicos)
+        {
+            if (evento.estadoActual.nombreEstado == "NoRevisado")
+            {
+                eventosPendientes.Add(evento);
+            }
+        }
+        return eventosPendientes;
     }
 
-    private static void crearEventosInicio(List<EventoSismico> eventosSismicos)
-    {
-        eventosSismicos.Clear();
-
-        var estadoNoRevisado = new Estado("evento", "NoRevisado");
-        var estadoRevisado = new Estado("evento", "Revisado");
-
-        eventosSismicos.Add(new EventoSismico(
-            new DateTime(2024, 6, 11, 14, 30, 0),
-            new DateTime(2024, 6, 11, 14, 45, 0),
-            34.6037,
-            58.3816,
-            34.6040,
-            58.3820,
-            5.2,
-            new CambioEstado(
-                new DateTime(2024, 6, 12, 14, 30, 0),
-                new DateTime(2024, 6, 12, 14, 45, 0),
-                estadoNoRevisado
-            ),
-            estadoNoRevisado
-        ));
-        eventosSismicos.Add(new EventoSismico(
-            new DateTime(2024, 6, 23, 9, 15, 0),
-            new DateTime(2024, 6, 23, 9, 30, 0),
-            31.4201,
-            64.1888,
-            31.4210,
-            64.1895,
-            4.8,
-            new CambioEstado(
-                new DateTime(2024, 6, 23, 9, 15, 0),
-                new DateTime(2024, 6, 23, 9, 30, 0),
-                estadoNoRevisado
-            ),
-            estadoNoRevisado
-        ));
-        eventosSismicos.Add(new EventoSismico(
-            new DateTime(2024, 6, 19, 22, 5, 0),
-            new DateTime(2024, 6, 19, 22, 20, 0),
-            32.9471,
-            60.6505,
-            32.9480,
-            60.6510,
-            6.1,
-            new CambioEstado(
-                new DateTime(2024, 6, 19, 22, 5, 0),
-                new DateTime(2024, 6, 19, 22, 20, 0),
-                estadoNoRevisado
-            ),
-            estadoNoRevisado
-        ));
-        eventosSismicos.Add(new EventoSismico(
-            new DateTime(2024, 6, 29, 3, 50, 0),
-            new DateTime(2024, 6, 29, 14, 5, 0),
-            24.7821,
-            65.4232,
-            24.7830,
-            65.4240,
-            5.7,
-            new CambioEstado(
-                new DateTime(2024, 6, 29, 3, 50, 0),
-                new DateTime(2024, 6, 29, 14, 5, 0),
-                estadoNoRevisado
-            ),
-            estadoNoRevisado
-        ));
-
-        // Simulamos la búsqueda en BD y ordenamos por fecha de ocurrencia  
-        eventosSismicos = eventosSismicos
-            .OrderBy(e => e.FechaHoraOcurrencia).ToList();
-    }
+   
 }
 

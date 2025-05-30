@@ -18,5 +18,10 @@ namespace PPAI_REDSISMICA.Entidades
             this.fechaHoraFin = fechaHoraFin;
             this.estado = estado;
         }
+
+        public static CambioEstado obtenerCambioEstado(EventoSismico evento)
+        {
+            
+        }
     }
 }

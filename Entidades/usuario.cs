@@ -17,5 +17,17 @@ namespace PPAI_REDSISMICA.Entidades
             this.nombreUsuario = nombreUsuario;
             this.contraseña = contraseña;
         }
+        
+        public Usuario()
+        {
+            // Constructor por defecto
+        }
+
+        public static Usuario obtenerLogueado(Usuario usuario)
+        {
+            return usuario;
+        }
+
+
     }
 }
