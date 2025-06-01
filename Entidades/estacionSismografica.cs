@@ -14,16 +14,16 @@ namespace PPAI_REDSISMICA.Entidades
 
         public DateTime fechaSolicitudCertificacion { get; set; }
 
-        public int latitud { get; set; }
+        public double latitud { get; set; }
 
-        public int longitud { get; set; }   
+        public double longitud { get; set; }   
 
         public string nombre { get; set; } 
 
         public int nroCerticacionAdquisicion { get; set; }  
 
 
-        public EstacionSismografica(int codigoEstacion, string documentoCertificacionAdq, DateTime fechaSolicitudCertificacion, int latitud, int longitud, string nombre, int nroCerticacionAdquisicion)
+        public EstacionSismografica(int codigoEstacion, string documentoCertificacionAdq, DateTime fechaSolicitudCertificacion, double latitud, double longitud, string nombre, int nroCerticacionAdquisicion)
         {
             this.codigoEstacion = codigoEstacion;
             this.documentoCertificacionAdq = documentoCertificacionAdq;

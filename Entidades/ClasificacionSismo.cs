@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class ClasificacionSismo
+    public class ClasificacionSismo
     {
         private int kmProfundidadDesde;
         private int kmProfundidadHasta;

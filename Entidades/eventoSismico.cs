@@ -11,14 +11,12 @@ public class EventoSismico
     public double LongitudEpicentro { get; set; }
     public double LongitudHipocentro { get; set; }
     public double ValorMagnitud { get; set; }
-    public CambioEstado CambioEstado { get; set; }
-    public Estado estadoActual { get; set; }
+    private CambioEstado CambioEstado { get; set; }
+    private Estado estadoActual { get; set; }
 
-    private OrigenDeGeneracion origenDeGeneracion;
-
-    private AlcanceSismo alcance;
-
-    private ClasificacionSismo clasificacion;
+    private OrigenDeGeneracion origenDeGeneracion { get; set; }
+    private AlcanceSismo alcance { get; set; }
+    private ClasificacionSismo clasificacion { get; set; }
 
     private List<SerieTemporal>? seriesTemporales = new List<SerieTemporal>();
 
@@ -32,7 +30,10 @@ public class EventoSismico
         double valorMagnitud,
         CambioEstado cambioEstado,
         Estado estadoActual,
-        List<SerieTemporal>? seriesTemporales)
+        List<SerieTemporal>? seriesTemporales,
+        AlcanceSismo alcanceSismo,
+        OrigenDeGeneracion origenDeGeneracionSismo,
+        ClasificacionSismo clasificacionSismo)
     {
         FechaHoraOcurrencia = fechaHoraOcurrencia;
         FechaHoraFin = fechaHoraFin;
@@ -44,6 +45,13 @@ public class EventoSismico
         CambioEstado = cambioEstado;
         this.estadoActual = estadoActual;
         this.seriesTemporales = seriesTemporales;
+        this.alcance = alcanceSismo;
+        this.origenDeGeneracion = origenDeGeneracionSismo;
+        this.clasificacion = clasificacionSismo;
+    }
+
+    public EventoSismico()
+    {
     }
 
     public static List<EventoSismico> esPendienteDeRevision(List<EventoSismico> eventosSismicos)
@@ -65,7 +73,7 @@ public class EventoSismico
        return CambioEstado.sosActual(evento, cambioEstadoEvento);// busco el cambio de estado abierto del evento sismico
     }
 
-    public void crearCambioEstado(Estado estado, DateTime fechaHoraInicio)
+    public CambioEstado crearCambioEstado(Estado estado, DateTime fechaHoraInicio)
     {
         //creo el nuevo cambio de estado del evento sismico
         CambioEstado = new CambioEstado(fechaHoraInicio, null, estado);
@@ -74,6 +82,8 @@ public class EventoSismico
 
         //TENGO QUE HACER SET ESTADO
         this.setEstado(estado); // Actualiza el estado actual del evento sismico
+
+        return CambioEstado; // Retorna el cambio de estado creado
 
     }
 
@@ -85,9 +95,9 @@ public class EventoSismico
     public (string origen, string alcance, string clasificacion) getDetallesEventoSismico()
     {
         return(
-        this.origenDeGeneracion.getNombre(),
-        this.alcance.getNombre(),
-        this.clasificacion.getNombre());
+            this.alcance.getNombre(),
+            this.origenDeGeneracion.getNombre(),
+            this.clasificacion.getNombre());
     }
 
     public void buscarSeriesTemporal(List<SerieTemporal> seriesVisitadas, 
@@ -108,7 +118,12 @@ public class EventoSismico
                 //serieTemporal.getDatos(); // Obtiene los datos de la serie temporal
             }
         }
-        throw new InvalidOperationException("No hay series temporales validas.");
+        //throw new InvalidOperationException("No hay series temporales validas.");
+    }
+
+    public CambioEstado GetCambioEstado()
+    {
+        return CambioEstado;
     }
 }
 

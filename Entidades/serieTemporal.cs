@@ -19,9 +19,9 @@ namespace PPAI_REDSISMICA.Entidades
         private List<MuestraSismica> muestrasSismicas = new List<MuestraSismica>();
 
         // Relacion con Sismografo inversa
-        private Sismografo sismografo;
+        private Sismografo? sismografo;
 
-        public SerieTemporal(bool condicionAlarma, DateTime fechaHoraInicioRegistroMuestras, DateTime fechaHoraRegistro, int frecuenciaMuestreo, List<MuestraSismica> muestrasSismicas, Sismografo sismografo)
+        public SerieTemporal(bool condicionAlarma, DateTime fechaHoraInicioRegistroMuestras, DateTime fechaHoraRegistro, int frecuenciaMuestreo, List<MuestraSismica> muestrasSismicas, Sismografo? sismografo)
         {
             this.condicionAlarma = condicionAlarma;
             this.fechaHoraInicioRegistroMuestras = fechaHoraInicioRegistroMuestras;
@@ -49,7 +49,7 @@ namespace PPAI_REDSISMICA.Entidades
                     //muestra.getDatos(); // Obtiene los datos de la serie temporal
                 }
             }
-            throw new InvalidOperationException("No hay muestras temporal validas.");
+            //throw new InvalidOperationException("No hay muestras temporal validas.");
         }
 
 

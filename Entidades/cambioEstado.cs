@@ -28,10 +28,9 @@ namespace PPAI_REDSISMICA.Entidades
 
         public static CambioEstado sosActual(EventoSismico evento, List<CambioEstado> cambioEstados)
         {
-
             foreach (var cambio in cambioEstados)
             {
-                if (evento.CambioEstado == cambio) // Verifico cuales Cambios de estado son del evento seleccionado 
+                if (evento.GetCambioEstado() == cambio) // Verifico cuales Cambios de estado son del evento seleccionado 
                 {
                     return cambio; // Retorna el primer cambio de estado abierto encontrado
                 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PPAI_REDSISMICA.Entidades
 {
-    internal class AlcanceSismo
+    public class AlcanceSismo
     {
         private string descripcion;
         private string nombre;

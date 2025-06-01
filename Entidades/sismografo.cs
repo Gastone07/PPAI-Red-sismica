@@ -8,11 +8,11 @@ namespace PPAI_REDSISMICA.Entidades
 {
     public class Sismografo
     {
-        public DateTime fechaAdquisicion { get; set; }
+        private DateTime fechaAdquisicion { get; set; }
 
-        public int identificador { get; set; }
+        private int identificador { get; set; }
 
-        public int nroSerie { get; set; }
+        private int nroSerie { get; set; }
 
         private EstacionSismografica estacionSismografica;
 

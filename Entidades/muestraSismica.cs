@@ -21,22 +21,21 @@ namespace PPAI_REDSISMICA.Entidades
 
         public void getDatos(List<DetalleMuestraSismica> detallesVisitados, List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle)
         {
-            if (detallesMuestrasSismicas == null || detallesMuestrasSismicas.Count == 0)
+            if (this.detallesMuestrasSismicas == null || this.detallesMuestrasSismicas.Count == 0)
             {
                 throw new InvalidOperationException("No hay detalles de muestra sismica asociados a la muestra.");
             }
             else
             {
-                foreach (var detalle in detallesMuestrasSismicas)
+                foreach (var detalle in this.detallesMuestrasSismicas)
                 {
                     detallesVisitados.Add(detalle);
                     var tipo = detalle.getTipoDato();
 
                     tipoDatoPorDetalle.Add((detalle, tipo));
                     //return detalle.getTipoDato(); // Obtiene los datos de la muestra sismica
-                }
+                }   
             }
-            throw new InvalidOperationException("No hay detalles de muestra sismica validos.");
         }
     }
 

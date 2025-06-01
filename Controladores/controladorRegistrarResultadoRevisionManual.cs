@@ -10,13 +10,15 @@ namespace Controladores
     {
         #region aributos
 
-        public readonly pantallaRegistrarResultadoRevisionManual pantalla;
+        private readonly pantallaRegistrarResultadoRevisionManual pantalla;
         // Declarar una variable que contenga un listado de eventos sísmicos
-        public List<EventoSismico> eventosSismicos = new List<EventoSismico>();
+        private List<EventoSismico> eventosSismicos = new List<EventoSismico>();
 
-        public Estado estadoBloqueado = new Estado();  
+        private Estado estadoBloqueado = new Estado();
 
-        public Usuario usuarioLogeado = new Usuario();
+        private Usuario usuarioLogeado = new Usuario();
+
+        private EventoSismico eventoSelec = new EventoSismico();
 
         private List<Estado> listadoEstado = new List<Estado>();
 
@@ -28,6 +30,8 @@ namespace Controladores
 
         private CambioEstado cambioEstadoAbierto = new CambioEstado();
 
+        private CambioEstado cambioEstadoNuevo = new CambioEstado();
+
         private string nombreAlcance = "";
         private string nombreClasificacion = "";
         private string nombreOrigen = "";
@@ -36,6 +40,8 @@ namespace Controladores
         private List<MuestraSismica> muestrasVisitadas = new List<MuestraSismica>();
         private List<DetalleMuestraSismica> detallesVisitados = new List<DetalleMuestraSismica>();
         private List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle = new List<(DetalleMuestraSismica, TipoDeDato)>();
+
+        private Estado estadoSeleccionado = new Estado();
 
         #endregion
         //Paso 1 del Caso de Uso
@@ -47,14 +53,15 @@ namespace Controladores
        public void registrarResultadoDeRevisionManual()
         {
             //paso 3 del Caso de Uso
+            //cargamos los objetos para trabajar
+            persistencia();
+
             buscarEventosAutoDetectado();
             
         }
 
         public void buscarEventosAutoDetectado()
         {
-            //cargamos los objetos para trabajar
-            persistencia();
 
             // filtramos los eventos que son NoRevisados
             eventosSismicos =  EventoSismico.esPendienteDeRevision(eventosSismicos);
@@ -68,6 +75,7 @@ namespace Controladores
         {
             // paso 7 caso de uso
             // busco el puntero de la para el estado bloqueado
+            eventoSelec = eventoSeleccionado; 
             estadoBloqueado = buscarEstadoBloqueado(listadoEstado);
             //busco el usuario logueado en ese momento
             usuarioLogeado = buscarUsuarioLogeado();
@@ -98,7 +106,9 @@ namespace Controladores
 
             //seteo fechaHoraFin del cambio de estado abierto
             cambioEstadoAbierto.setFechaHoraFin(fechaHoraActual);
-            eventoSeleccionado.crearCambioEstado(estadoBloqueado, fechaHoraActual);
+            cambioEstadoNuevo = eventoSeleccionado.crearCambioEstado(estadoBloqueado, fechaHoraActual);
+            listadoCambiosEstado.Add(cambioEstadoNuevo);
+
             //fin paso 8
             buscarDetallesEventoSismico(eventoSeleccionado);
         }
@@ -110,7 +120,9 @@ namespace Controladores
             (nombreAlcance, nombreClasificacion, nombreOrigen) = eventoSeleccionado.getDetallesEventoSismico();
 
             obtenerDatosSeriesTemporal(eventoSeleccionado);
-            
+            generarSismograma(seriesVisitadas, muestrasVisitadas, detallesVisitados, tipoDatoPorDetalle);
+
+            pantalla.mostrarDetalleEventoSismico(nombreAlcance, nombreClasificacion, nombreOrigen, eventoSeleccionado.ValorMagnitud);
 
         }
         public void obtenerDatosSeriesTemporal(EventoSismico eventoSeleccionado)
@@ -123,13 +135,6 @@ namespace Controladores
 
             //FALTA ORDENAR POR ESTACION
             eventoSeleccionado.buscarSeriesTemporal(seriesVisitadas, muestrasVisitadas, detallesVisitados, tipoDatoPorDetalle);
-
-            generarSismograma(seriesVisitadas, muestrasVisitadas, detallesVisitados, tipoDatoPorDetalle);
-
-            pantalla.
-
-
-
         }
 
         public void generarSismograma(List<SerieTemporal> seriesVisitadas, 
@@ -138,8 +143,43 @@ namespace Controladores
                                         List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle)
         {
             //Generar Sismograma
-            //aca llamamos al CU externo 
+            //aca llamamos al CU externo
 
+        }
+
+        public void tomarOpcionGrilla(string opcionCombo, string alcance, string origen, double magnitud)
+        {
+            //paso 14 al 17 con alternativas
+            if (opcionCombo == "Rechazar evento")
+            {
+                estadoSeleccionado = Estado.esRechazado(listadoEstado);
+                cambioEstadoAbierto = EventoSismico.buscarCambioEstadoAbierto(eventoSelec, listadoCambiosEstado);
+                cambioEstadoAbierto.setFechaHoraFin(fechaHoraActual);
+                cambioEstadoNuevo = eventoSelec.crearCambioEstado(estadoSeleccionado, fechaHoraActual);
+                listadoCambiosEstado.Add(cambioEstadoNuevo);
+            }
+            else if (opcionCombo == "Confirmar evento")
+            {
+                estadoSeleccionado = Estado.esConfirmado(listadoEstado);
+                cambioEstadoAbierto = EventoSismico.buscarCambioEstadoAbierto(eventoSelec, listadoCambiosEstado);
+                cambioEstadoAbierto.setFechaHoraFin(fechaHoraActual);
+                cambioEstadoNuevo = eventoSelec.crearCambioEstado(estadoSeleccionado, fechaHoraActual);
+                listadoCambiosEstado.Add(cambioEstadoNuevo);
+            }
+            else if (opcionCombo == "Solicitar revisión a experto")
+            {
+                estadoSeleccionado = Estado.esRevisadoExperto(listadoEstado);
+                cambioEstadoAbierto = EventoSismico.buscarCambioEstadoAbierto(eventoSelec, listadoCambiosEstado);
+                cambioEstadoAbierto.setFechaHoraFin(fechaHoraActual);
+                cambioEstadoNuevo = eventoSelec.crearCambioEstado(estadoSeleccionado, fechaHoraActual);
+                listadoCambiosEstado.Add(cambioEstadoNuevo);
+            }
+            else
+            {
+                // Manejar caso no válido
+                throw new ArgumentException("Opción no válida");
+            }
+            buscarEventosAutoDetectado();
         }
 
         private void persistencia()
@@ -208,17 +248,29 @@ namespace Controladores
                 detalleMuestra15]
             );
 
+
+            //Estacion Sismografica
+            EstacionSismografica estacion1 = new EstacionSismografica(1, "DocumentoCertificacion1", DateTime.Now, 48.99, 29.01, "La boca", 1);
+            EstacionSismografica estacion2 = new EstacionSismografica(2, "DocumentoCertificacion2", DateTime.Now, 19.44, 07.58, "Capital", 2);
+
+            //sismografo
+            Sismografo sismografo1 = new Sismografo(DateTime.Now, 1, 1999, estacion1);
+            Sismografo sismografo2 = new Sismografo(DateTime.Now, 2, 2000, estacion2);
+
             //Series temporales(solo una de momento)
 
-            var serieTemporal1 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica1, muestraSismica2, muestraSismica3]);
-            var serieTemporal2 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica4]);
-            var serieTemporal3 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica5]);
+            var serieTemporal1 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica1, muestraSismica2, muestraSismica3],sismografo1);
+            var serieTemporal2 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica4],sismografo1);
+            var serieTemporal3 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica5], sismografo2);
 
 
             //Estados
             var estadoNoRevisado = new Estado("evento", "NoRevisado");
             var estadoRevisado = new Estado("evento", "Revisado");
             var estadoBloqueado = new Estado("evento", "BloqueadoEnRevision");
+            var estadoRechazado = new Estado("evento", "Rechazado");
+            var estadoConfirmado = new Estado("evento", "Confirmado");
+            var estadoRevisadoExperto = new Estado("evento", "RevisadoPorExperto");
             var estadoBloqueado2 = new Estado("sismografo", "SismografoBloqueado");
             var estadoBloqueado3 = new Estado("sismografo", "SismografoDisponible");
 
@@ -227,6 +279,25 @@ namespace Controladores
             listadoEstado.Add(estadoBloqueado);
             listadoEstado.Add(estadoBloqueado2);
             listadoEstado.Add(estadoBloqueado3);
+            listadoEstado.Add(estadoRechazado);
+            listadoEstado.Add(estadoConfirmado);
+            listadoEstado.Add(estadoRevisadoExperto);
+
+            //clasificacion
+            ClasificacionSismo clasificacionSismo1 = new ClasificacionSismo(0, 70, "Superficial");
+            ClasificacionSismo clasificacionSismo2 = new ClasificacionSismo(70, 300, "Intermedio");
+            ClasificacionSismo clasificacionSismo3 = new ClasificacionSismo(300, 700, "profundo");
+
+            //Origen de Generacion
+            OrigenDeGeneracion origenGeneracion1 = new OrigenDeGeneracion("Tectonico", "Movimientos de las placas tectónicas en la corteza terrestre, causados por la acumulación y liberación de energía en fallas geológicas");
+            OrigenDeGeneracion origenGeneracion2 = new OrigenDeGeneracion("Volcanico", "Actividad volcánica, como el movimiento de magma, gases o fracturamiento de roca en cámaras magmáticas.");
+            OrigenDeGeneracion origenGeneracion3 = new OrigenDeGeneracion("Inducido", "Actividades humanas, como la extracción de petróleo o gas, la inyección de fluidos en el subsuelo (fracking), la construcción de embalses o la minería.");
+
+            // Crear Alcance Sismo
+            AlcanceSismo alcanceSismo1 = new AlcanceSismo("Local", "Afecta una región geográfica limitada, como una ciudad o un área metropolitana.");
+            AlcanceSismo alcanceSismo2 = new AlcanceSismo("Regional", "Afectan una región más amplia, abarcando decenas o cientos de kilómetros desde el epicentro.");
+            AlcanceSismo alcanceSismo3 = new AlcanceSismo("Telurico", "Pueden sentirse a cientos o miles de kilómetros del epicentro, afectando grandes regiones o incluso países.");
+
 
             // Cambios de Estado
 
@@ -290,7 +361,8 @@ namespace Controladores
                 5.2,
                 cambioEstado1,
                 estadoNoRevisado,
-                [serieTemporal1]
+                [serieTemporal1],
+                alcanceSismo1, origenGeneracion1, clasificacionSismo1
             ));
             eventosSismicos.Add(new EventoSismico(
                 new DateTime(2024, 6, 23, 9, 15, 0),
@@ -301,7 +373,9 @@ namespace Controladores
                 64.1895,
                 4.8,
                cambioEstado2,
-                estadoNoRevisado, [serieTemporal2, serieTemporal3]
+                estadoNoRevisado, [serieTemporal2, serieTemporal3],
+                alcanceSismo2, origenGeneracion2, clasificacionSismo2
+
             ));
             eventosSismicos.Add(new EventoSismico(
                 new DateTime(2024, 6, 19, 22, 5, 0),
@@ -312,7 +386,8 @@ namespace Controladores
                 60.6510,
                 6.1,
                 cambioEstado3,
-                estadoNoRevisado, null
+                estadoNoRevisado, null,
+                alcanceSismo3, origenGeneracion3, clasificacionSismo3
             ));
             eventosSismicos.Add(new EventoSismico(
                 new DateTime(2024, 6, 29, 3, 50, 0),
@@ -323,7 +398,8 @@ namespace Controladores
                 65.4240,
                 5.7,
                 cambioEstado4,
-                estadoNoRevisado, null
+                estadoNoRevisado, null,
+                alcanceSismo1, origenGeneracion1, clasificacionSismo1
             ));
             //evetos "revisados"
             eventosSismicos.Add(new EventoSismico(
@@ -335,7 +411,8 @@ namespace Controladores
                65.4240,
                5.7,
                cambioEstado5,
-               estadoRevisado, null
+               estadoRevisado, null,
+               alcanceSismo2, origenGeneracion2, clasificacionSismo2
            ));
             eventosSismicos.Add(new EventoSismico(
                new DateTime(2025, 6, 29, 3, 50, 0),
@@ -346,7 +423,8 @@ namespace Controladores
                65.4240,
                5.7,
                cambioEstado6,
-               estadoRevisado, null
+               estadoRevisado, null,
+               alcanceSismo3, origenGeneracion3, clasificacionSismo3    
            ));
            
 
