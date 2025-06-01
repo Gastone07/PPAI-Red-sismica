@@ -99,9 +99,13 @@ namespace Controladores
         public void buscarDetallesEventoSismico(EventoSismico eventoSeleccionado)
         {
             eventoSeleccionado.getDetallesEventoSismico();
+            obtenerDatosSeriesTemporal(eventoSeleccionado);
 
         }
-
+        public void obtenerDatosSeriesTemporal(EventoSismico eventoSeleccionado)
+        {
+            eventoSeleccionado.buscarSeriesTermporal();
+        }
         private void persistencia()
         {
             eventosSismicos.Clear();

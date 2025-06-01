@@ -23,5 +23,7 @@ namespace PPAI_REDSISMICA.Entidades
             this.fechaHoraRegistro = fechaHoraRegistro;
             this.frecuenciaMuestreo = frecuenciaMuestreo;
         }
+
+        
     }
 }

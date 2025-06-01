@@ -85,5 +85,10 @@ public class EventoSismico
         this.alcance.getNombre();
         this.clasificacion.getNombre();
     }
+
+    public void buscarSeriesTermporal()
+    {
+        
+    }
 }
 
