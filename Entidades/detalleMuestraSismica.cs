@@ -8,10 +8,13 @@ namespace PPAI_REDSISMICA.Entidades
 {
     public class DetalleMuestraSismica
     {
-        public int valor { get; set; }
-        public DetalleMuestraSismica(int valor)
+        public double valor { get; set; }
+
+        private TipoDeDato tipoDeDato;
+        public DetalleMuestraSismica(double valor, TipoDeDato tipoDeDato)
         {
             this.valor = valor;
+            this.tipoDeDato = tipoDeDato;
         }
     }
 }

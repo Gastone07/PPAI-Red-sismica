@@ -110,6 +110,80 @@ namespace Controladores
         {
             eventosSismicos.Clear();
 
+            //tipo dato
+            var tipoDato1 = new TipoDeDato("Velocidad Onda", "Km/seg", 8.0);
+            var tipoDato2 = new TipoDeDato("Frecuencia de onda", "Hz", 15.0);
+            var tipoDato3 = new TipoDeDato("Longitud", "Km/ciclo", 1.0);
+            
+            //Detalle muestra sismica 
+
+            var detalleMuestra1 = new DetalleMuestraSismica(7,tipoDato1);
+            var detalleMuestra2 = new DetalleMuestraSismica(10, tipoDato2);
+            var detalleMuestra3 = new DetalleMuestraSismica(0.7, tipoDato3);
+            
+            var detalleMuestra4 = new DetalleMuestraSismica(7.02, tipoDato1);
+            var detalleMuestra5 = new DetalleMuestraSismica(10, tipoDato2);
+            var detalleMuestra6 = new DetalleMuestraSismica(0.69, tipoDato3);
+
+            var detalleMuestra7 = new DetalleMuestraSismica(6.99, tipoDato1);
+            var detalleMuestra8 = new DetalleMuestraSismica(10.01, tipoDato2);
+            var detalleMuestra9 = new DetalleMuestraSismica(0.7, tipoDato3);
+
+            var detalleMuestra10 = new DetalleMuestraSismica(5.01, tipoDato1);
+            var detalleMuestra11 = new DetalleMuestraSismica(9.82, tipoDato2);
+            var detalleMuestra12 = new DetalleMuestraSismica(0.33, tipoDato3);
+
+            var detalleMuestra13 = new DetalleMuestraSismica(7.36, tipoDato1);
+            var detalleMuestra14 = new DetalleMuestraSismica(6.12, tipoDato2);
+            var detalleMuestra15 = new DetalleMuestraSismica(0.14, tipoDato3);
+
+
+
+            //Muestra sismica 
+
+            var muestraSismica1 = new MuestraSismica(
+                new DateTime(2024, 6, 11, 14, 30, 0),
+                [detalleMuestra1,
+                detalleMuestra2,
+                detalleMuestra3]
+            );
+            
+            var muestraSismica2 = new MuestraSismica(
+                new DateTime(2024, 6, 11, 14, 35, 0),
+                [detalleMuestra4,
+                detalleMuestra5,
+                detalleMuestra6]
+            );
+
+            var muestraSismica3 = new MuestraSismica(
+                new DateTime(2024, 6, 11, 14, 40, 0),
+                [detalleMuestra7,
+                detalleMuestra8,
+                detalleMuestra9]
+            );
+            
+
+            var muestraSismica4 = new MuestraSismica(
+                new DateTime(2024, 6, 11, 14, 45, 0),
+                [detalleMuestra10,
+                detalleMuestra11,
+                detalleMuestra12]
+            );
+
+            var muestraSismica5 = new MuestraSismica(
+                new DateTime(2024, 8, 12, 14, 50, 0),
+                [detalleMuestra13,
+                detalleMuestra14,
+                detalleMuestra15]
+            );
+
+            //Series temporales(solo una de momento)
+
+            var serieTemporal1 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica1, muestraSismica2, muestraSismica3]);
+            var serieTemporal2 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica4]);
+            var serieTemporal3 = new SerieTemporal( false, DateTime.Now, DateTime.Now, 50, [muestraSismica5]);
+
+
             //Estados
             var estadoNoRevisado = new Estado("evento", "NoRevisado");
             var estadoRevisado = new Estado("evento", "Revisado");
@@ -155,7 +229,7 @@ namespace Controladores
                 new DateTime(2025, 6, 29, 14, 5, 0),
                 estadoRevisado
             );
-
+            
             listadoCambiosEstado.Add(cambioEstado1);
             listadoCambiosEstado.Add(cambioEstado2);
             listadoCambiosEstado.Add(cambioEstado3);
@@ -242,7 +316,7 @@ namespace Controladores
                cambioEstado6,
                estadoRevisado
            ));
-
+           
 
             // Simulamos la búsqueda en BD y ordenamos por fecha de ocurrencia  
             eventosSismicos = eventosSismicos

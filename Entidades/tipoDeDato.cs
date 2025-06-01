@@ -12,9 +12,9 @@ namespace PPAI_REDSISMICA.Entidades
 
         public string nombreUnidadMedida { get; set; }
 
-        public int valorUmbral { get; set; }
+        public double valorUmbral { get; set; }
 
-        public TipoDeDato(string denominacion, string nombreUnidadMedida, int valorUmbral)
+        public TipoDeDato(string denominacion, string nombreUnidadMedida, double valorUmbral)
         {
             this.denominacion = denominacion;
             this.nombreUnidadMedida = nombreUnidadMedida;
