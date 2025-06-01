@@ -8,9 +8,9 @@ namespace PPAI_REDSISMICA.Entidades
 {
     internal class ClasificacionSismo
     {
-        public int kmProfundidadDesde { get; set; }
-        public int kmProfundidadHasta { get; set; }
-        public string nombre { get; set; }
+        private int kmProfundidadDesde;
+        private int kmProfundidadHasta;
+        private string nombre;
 
 
         public ClasificacionSismo(int kmProfundidadDesde, int kmProfundidadHasta, string nombre)
@@ -18,6 +18,11 @@ namespace PPAI_REDSISMICA.Entidades
             this.kmProfundidadDesde = kmProfundidadDesde;
             this.kmProfundidadHasta = kmProfundidadHasta;
             this.nombre = nombre;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
         }
     }
 }

@@ -8,13 +8,18 @@ namespace PPAI_REDSISMICA.Entidades
 {
     internal class AlcanceSismo
     {
-        public string descripcion { get; set; }
-        public string nombre { get; set; }
+        private string descripcion;
+        private string nombre;
 
         public AlcanceSismo(string nombre, string descripcion)
         {
             this.nombre = nombre;
             this.descripcion = descripcion;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
         }
     }
 

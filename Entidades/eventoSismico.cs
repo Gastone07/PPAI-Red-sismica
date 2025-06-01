@@ -14,6 +14,12 @@ public class EventoSismico
     public CambioEstado CambioEstado { get; set; }
     public Estado estadoActual { get; set; }
 
+    private OrigenDeGeneracion origenDeGeneracion;
+
+    private AlcanceSismo alcance;
+
+    private ClasificacionSismo clasificacion;
+
     public EventoSismico(
         DateTime fechaHoraOcurrencia,
         DateTime fechaHoraFin,
@@ -49,6 +55,35 @@ public class EventoSismico
         return eventosPendientes;
     }
 
-   
+
+    public static CambioEstado buscarCambioEstadoAbierto(EventoSismico evento, List<CambioEstado> cambioEstadoEvento)
+    {
+       return CambioEstado.sosActual(evento, cambioEstadoEvento);// busco el cambio de estado abierto del evento sismico
+    }
+
+    public void crearCambioEstado(Estado estado, DateTime fechaHoraInicio)
+    {
+        //creo el nuevo cambio de estado del evento sismico
+        CambioEstado = new CambioEstado(fechaHoraInicio, null, estado);
+
+        this.CambioEstado = CambioEstado; // Actualiza el cambio de estado del evento sismico
+
+        //TENGO QUE HACER SET ESTADO
+        this.setEstado(estado); // Actualiza el estado actual del evento sismico
+
+    }
+
+    public void setEstado(Estado estado)     
+    {
+        this.estadoActual = estado; // Actualiza el estado actual del evento sismico
+    }
+
+    public void getDetallesEventoSismico()
+    {
+        //buscar alcance origen y clasificacion del evento sismico
+        this.origenDeGeneracion.getNombre();
+        this.alcance.getNombre();
+        this.clasificacion.getNombre();
+    }
 }
 

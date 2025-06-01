@@ -23,6 +23,10 @@ namespace Controladores
         private List<Sesion> listadoSesiones = new List<Sesion>();
 
         private DateTime fechaHoraActual;
+
+        private List<CambioEstado> listadoCambiosEstado = new List<CambioEstado>();
+
+        private CambioEstado cambioEstadoAbierto = new CambioEstado();
         #endregion
         //Paso 1 del Caso de Uso
         public controladorRegistrarResultadoRevisionManual(pantallaRegistrarResultadoRevisionManual pan)
@@ -60,7 +64,7 @@ namespace Controladores
 
             fechaHoraActual = DateTime.Now;
 
-            buscarCambioEstadoAbierto(eventoSeleccionado);
+            buscarCambioEstadoAbierto(eventoSeleccionado, listadoCambiosEstado);
 
 
 
@@ -78,12 +82,25 @@ namespace Controladores
             return Sesion.obtenerUsuarioLogueado(listadoSesiones);
         }
 
-        private void buscarCambioEstadoAbierto(EventoSismico eventoSeleccionado)
+        // paso 8 del caso de uso seria nuestro revisar()
+        private void buscarCambioEstadoAbierto(EventoSismico eventoSeleccionado, List<CambioEstado> cambioEstados)
         {
             //cambio estado del evento para bloquearlo PASO 8 del caso de uso
-            CambioEstado.sosActual(eventoSeleccionado);
+            cambioEstadoAbierto = EventoSismico.buscarCambioEstadoAbierto(eventoSeleccionado, cambioEstados);
+
+            //seteo fechaHoraFin del cambio de estado abierto
+            cambioEstadoAbierto.setFechaHoraFin(fechaHoraActual);
+            eventoSeleccionado.crearCambioEstado(estadoBloqueado, fechaHoraActual);
+            //fin paso 8
+            buscarDetallesEventoSismico(eventoSeleccionado);
         }
-        
+
+        // paso 9 del caso
+        public void buscarDetallesEventoSismico(EventoSismico eventoSeleccionado)
+        {
+            eventoSeleccionado.getDetallesEventoSismico();
+
+        }
 
         private void persistencia()
         {
@@ -102,12 +119,52 @@ namespace Controladores
             listadoEstado.Add(estadoBloqueado2);
             listadoEstado.Add(estadoBloqueado3);
 
+            // Cambios de Estado
+
+            var cambioEstado1 = new CambioEstado(
+                new DateTime(2024, 6, 11, 14, 30, 0),
+                new DateTime(2024, 6, 11, 14, 45, 0),
+                estadoNoRevisado
+            );
+            var cambioEstado2 = new CambioEstado(
+                new DateTime(2024, 6, 23, 9, 15, 0),
+                new DateTime(2024, 6, 23, 9, 30, 0),
+                estadoNoRevisado
+            );
+            var cambioEstado3 = new CambioEstado(
+                new DateTime(2024, 6, 19, 22, 5, 0),
+                new DateTime(2024, 6, 19, 22, 20, 0),
+                estadoNoRevisado
+            );
+            var cambioEstado4 = new CambioEstado(
+                new DateTime(2024, 6, 29, 3, 50, 0),
+                new DateTime(2024, 6, 29, 14, 5, 0),
+                estadoNoRevisado
+            );
+            var cambioEstado5 = new CambioEstado(
+                new DateTime(2024, 6, 29, 3, 50, 0),
+                new DateTime(2024, 6, 29, 14, 5, 0),
+                estadoRevisado
+            );
+            var cambioEstado6 = new CambioEstado(
+                new DateTime(2025, 6, 29, 3, 50, 0),
+                new DateTime(2025, 6, 29, 14, 5, 0),
+                estadoRevisado
+            );
+
+            listadoCambiosEstado.Add(cambioEstado1);
+            listadoCambiosEstado.Add(cambioEstado2);
+            listadoCambiosEstado.Add(cambioEstado3);
+            listadoCambiosEstado.Add(cambioEstado4);
+            listadoCambiosEstado.Add(cambioEstado5);
+            listadoCambiosEstado.Add(cambioEstado6);
+
             // Usuario
             var usuario1 = new Usuario("12345", "Serna");
             var usuario2 = new Usuario("bocaboca", "Roman");
 
             var sesion1 = new Sesion(usuario2, DateTime.Now.AddHours(-1), DateTime.Now);
-            var sesionActual = new Sesion(usuario1, DateTime.Now);
+            var sesionActual = new Sesion(usuario1, DateTime.Now,null);
 
             listadoSesiones.Add(sesion1);
             listadoSesiones.Add(sesionActual);
@@ -122,11 +179,7 @@ namespace Controladores
                 34.6040,
                 58.3820,
                 5.2,
-                new CambioEstado(
-                    new DateTime(2024, 6, 12, 14, 30, 0),
-                    DateTime.Now,
-                    estadoNoRevisado
-                ),
+                cambioEstado1,
                 estadoNoRevisado
             ));
             eventosSismicos.Add(new EventoSismico(
@@ -137,11 +190,7 @@ namespace Controladores
                 31.4210,
                 64.1895,
                 4.8,
-                new CambioEstado(
-                    new DateTime(2024, 6, 23, 9, 15, 0),
-                    DateTime.Now,
-                    estadoNoRevisado
-                ),
+               cambioEstado2,
                 estadoNoRevisado
             ));
             eventosSismicos.Add(new EventoSismico(
@@ -152,11 +201,7 @@ namespace Controladores
                 32.9480,
                 60.6510,
                 6.1,
-                new CambioEstado(
-                    new DateTime(2024, 6, 19, 22, 5, 0),
-                    DateTime.Now,
-                    estadoNoRevisado
-                ),
+                cambioEstado3,
                 estadoNoRevisado
             ));
             eventosSismicos.Add(new EventoSismico(
@@ -167,11 +212,7 @@ namespace Controladores
                 24.7830,
                 65.4240,
                 5.7,
-                new CambioEstado(
-                    new DateTime(2024, 6, 29, 3, 50, 0),
-                    DateTime.Now,
-                    estadoNoRevisado
-                ),
+                cambioEstado4,
                 estadoNoRevisado
             ));
             //evetos "revisados"
@@ -183,11 +224,7 @@ namespace Controladores
                24.7830,
                65.4240,
                5.7,
-               new CambioEstado(
-                   new DateTime(2024, 6, 29, 3, 50, 0),
-                   new DateTime(2024, 6, 29, 14, 5, 0),
-                   estadoRevisado
-               ),
+               cambioEstado5,
                estadoRevisado
            ));
             eventosSismicos.Add(new EventoSismico(
@@ -198,11 +235,7 @@ namespace Controladores
                24.7830,
                65.4240,
                5.7,
-               new CambioEstado(
-                   new DateTime(2024, 6, 29, 3, 50, 0),
-                   new DateTime(2024, 6, 29, 14, 5, 0),
-                   estadoRevisado
-               ),
+               cambioEstado6,
                estadoRevisado
            ));
 
