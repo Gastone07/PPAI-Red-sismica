@@ -14,11 +14,19 @@ namespace PPAI_REDSISMICA.Entidades
 
         public int nroSerie { get; set; }
 
-        public Sismografo(DateTime fechaAdquisicion, int identificador, int nroSerie)
+        private EstacionSismografica estacionSismografica;
+
+        public Sismografo(DateTime fechaAdquisicion, int identificador, int nroSerie, EstacionSismografica estacionSismografica)
         {
             this.fechaAdquisicion = fechaAdquisicion;
             this.identificador = identificador;
             this.nroSerie = nroSerie;
+            this.estacionSismografica = estacionSismografica;
+        }
+
+        public string getNombreEstacion()
+        {
+            return this.estacionSismografica.getNombre(); // Obtiene el nombre de la estacion sismografica
         }
     }
 }

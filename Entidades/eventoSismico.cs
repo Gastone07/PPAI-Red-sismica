@@ -82,15 +82,18 @@ public class EventoSismico
         this.estadoActual = estado; // Actualiza el estado actual del evento sismico
     }
 
-    public void getDetallesEventoSismico()
+    public (string origen, string alcance, string clasificacion) getDetallesEventoSismico()
     {
-        //buscar alcance origen y clasificacion del evento sismico
-        this.origenDeGeneracion.getNombre();
-        this.alcance.getNombre();
-        this.clasificacion.getNombre();
+        return(
+        this.origenDeGeneracion.getNombre(),
+        this.alcance.getNombre(),
+        this.clasificacion.getNombre());
     }
 
-    public MuestraSismica buscarSeriesTermporal()
+    public void buscarSeriesTemporal(List<SerieTemporal> seriesVisitadas, 
+                                        List<MuestraSismica> muestrasVisitadas, 
+                                        List<DetalleMuestraSismica> detallesVisitados, 
+                                        List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle)
     {
         if (seriesTemporales == null || seriesTemporales.Count == 0)
         {
@@ -100,7 +103,9 @@ public class EventoSismico
         {
             foreach (var serieTemporal in seriesTemporales)
             {
-                 serieTemporal.getDatos(); // Obtiene los datos de la serie temporal
+                seriesVisitadas.Add(serieTemporal);
+                serieTemporal.getDatos(muestrasVisitadas, detallesVisitados, tipoDatoPorDetalle);
+                //serieTemporal.getDatos(); // Obtiene los datos de la serie temporal
             }
         }
         throw new InvalidOperationException("No hay series temporales validas.");

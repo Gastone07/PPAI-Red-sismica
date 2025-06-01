@@ -18,17 +18,23 @@ namespace PPAI_REDSISMICA.Entidades
 
         private List<MuestraSismica> muestrasSismicas = new List<MuestraSismica>();
 
-        public SerieTemporal(bool condicionAlarma, DateTime fechaHoraInicioRegistroMuestras, DateTime fechaHoraRegistro, int frecuenciaMuestreo, List<MuestraSismica> muestrasSismicas)
+        // Relacion con Sismografo inversa
+        private Sismografo sismografo;
+
+        public SerieTemporal(bool condicionAlarma, DateTime fechaHoraInicioRegistroMuestras, DateTime fechaHoraRegistro, int frecuenciaMuestreo, List<MuestraSismica> muestrasSismicas, Sismografo sismografo)
         {
             this.condicionAlarma = condicionAlarma;
             this.fechaHoraInicioRegistroMuestras = fechaHoraInicioRegistroMuestras;
             this.fechaHoraRegistro = fechaHoraRegistro;
             this.frecuenciaMuestreo = frecuenciaMuestreo;
             this.muestrasSismicas = muestrasSismicas;
+            this.sismografo = sismografo;
         }
 
-        public MuestraSismica getDatos()
+        public void getDatos(List<MuestraSismica> muestrasVisitadas, List<DetalleMuestraSismica> detallesVisitados, List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle)
         {
+            this.sismografo.getNombreEstacion(); // Obtiene el nombre de la estacion del sismografo
+
             if (muestrasSismicas == null || muestrasSismicas.Count == 0)
             {
                 throw new InvalidOperationException("No hay muestras asociadas a la serie temporal.");
@@ -37,7 +43,10 @@ namespace PPAI_REDSISMICA.Entidades
             {
                 foreach (var muestra in muestrasSismicas)
                 {
-                    muestra.getDatos(); // Obtiene los datos de la serie temporal
+                    muestrasVisitadas.Add(muestra);
+                    muestra.getDatos(detallesVisitados, tipoDatoPorDetalle);
+
+                    //muestra.getDatos(); // Obtiene los datos de la serie temporal
                 }
             }
             throw new InvalidOperationException("No hay muestras temporal validas.");

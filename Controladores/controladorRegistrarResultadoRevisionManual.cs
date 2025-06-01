@@ -28,6 +28,15 @@ namespace Controladores
 
         private CambioEstado cambioEstadoAbierto = new CambioEstado();
 
+        private string nombreAlcance = "";
+        private string nombreClasificacion = "";
+        private string nombreOrigen = "";
+
+        private List<SerieTemporal> seriesVisitadas = new List<SerieTemporal>();
+        private List<MuestraSismica> muestrasVisitadas = new List<MuestraSismica>();
+        private List<DetalleMuestraSismica> detallesVisitados = new List<DetalleMuestraSismica>();
+        private List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle = new List<(DetalleMuestraSismica, TipoDeDato)>();
+
         #endregion
         //Paso 1 del Caso de Uso
         public controladorRegistrarResultadoRevisionManual(pantallaRegistrarResultadoRevisionManual pan)
@@ -65,9 +74,7 @@ namespace Controladores
 
             fechaHoraActual = DateTime.Now;
 
-            buscarCambioEstadoAbierto(eventoSeleccionado, listadoCambiosEstado);
-
-
+            actualizarCambioEstado(eventoSeleccionado, listadoCambiosEstado);
 
         }
 
@@ -84,7 +91,7 @@ namespace Controladores
         }
 
         // paso 8 del caso de uso seria nuestro revisar()
-        private void buscarCambioEstadoAbierto(EventoSismico eventoSeleccionado, List<CambioEstado> cambioEstados)
+        private void actualizarCambioEstado(EventoSismico eventoSeleccionado, List<CambioEstado> cambioEstados)
         {
             //cambio estado del evento para bloquearlo PASO 8 del caso de uso
             cambioEstadoAbierto = EventoSismico.buscarCambioEstadoAbierto(eventoSeleccionado, cambioEstados);
@@ -99,14 +106,42 @@ namespace Controladores
         // paso 9 del caso
         public void buscarDetallesEventoSismico(EventoSismico eventoSeleccionado)
         {
-            eventoSeleccionado.getDetallesEventoSismico();
+            //guardo los valores de los detalles del evento sismico
+            (nombreAlcance, nombreClasificacion, nombreOrigen) = eventoSeleccionado.getDetallesEventoSismico();
+
             obtenerDatosSeriesTemporal(eventoSeleccionado);
+            
 
         }
         public void obtenerDatosSeriesTemporal(EventoSismico eventoSeleccionado)
         {
-            eventoSeleccionado.buscarSeriesTermporal();
+            //limpio las listas para evitar duplicados
+            seriesVisitadas.Clear();
+            muestrasVisitadas.Clear();
+            detallesVisitados.Clear();
+            tipoDatoPorDetalle.Clear();
+
+            //FALTA ORDENAR POR ESTACION
+            eventoSeleccionado.buscarSeriesTemporal(seriesVisitadas, muestrasVisitadas, detallesVisitados, tipoDatoPorDetalle);
+
+            generarSismograma(seriesVisitadas, muestrasVisitadas, detallesVisitados, tipoDatoPorDetalle);
+
+            pantalla.
+
+
+
         }
+
+        public void generarSismograma(List<SerieTemporal> seriesVisitadas, 
+                                        List<MuestraSismica> muestrasVisitadas, 
+                                        List<DetalleMuestraSismica> detallesVisitados, 
+                                        List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle)
+        {
+            //Generar Sismograma
+            //aca llamamos al CU externo 
+
+        }
+
         private void persistencia()
         {
             eventosSismicos.Clear();

@@ -34,5 +34,10 @@ namespace PPAI_REDSISMICA.Entidades
             this.nroCerticacionAdquisicion = nroCerticacionAdquisicion;
         }
 
+        public string getNombre()
+        {
+            return this.nombre; // Retorna el nombre de la estacion sismografica
+        }
+
     }
 }

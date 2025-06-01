@@ -19,7 +19,7 @@ namespace PPAI_REDSISMICA.Entidades
 
         }
 
-        public TipoDeDato getDatos()
+        public void getDatos(List<DetalleMuestraSismica> detallesVisitados, List<(DetalleMuestraSismica, TipoDeDato)> tipoDatoPorDetalle)
         {
             if (detallesMuestrasSismicas == null || detallesMuestrasSismicas.Count == 0)
             {
@@ -29,7 +29,11 @@ namespace PPAI_REDSISMICA.Entidades
             {
                 foreach (var detalle in detallesMuestrasSismicas)
                 {
-                    return detalle.getTipoDato(); // Obtiene los datos de la muestra sismica
+                    detallesVisitados.Add(detalle);
+                    var tipo = detalle.getTipoDato();
+
+                    tipoDatoPorDetalle.Add((detalle, tipo));
+                    //return detalle.getTipoDato(); // Obtiene los datos de la muestra sismica
                 }
             }
             throw new InvalidOperationException("No hay detalles de muestra sismica validos.");
