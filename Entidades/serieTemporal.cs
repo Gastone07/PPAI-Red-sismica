@@ -27,6 +27,22 @@ namespace PPAI_REDSISMICA.Entidades
             this.muestrasSismicas = muestrasSismicas;
         }
 
+        public MuestraSismica getDatos()
+        {
+            if (muestrasSismicas == null || muestrasSismicas.Count == 0)
+            {
+                throw new InvalidOperationException("No hay muestras asociadas a la serie temporal.");
+            }
+            else
+            {
+                foreach (var muestra in muestrasSismicas)
+                {
+                    muestra.getDatos(); // Obtiene los datos de la serie temporal
+                }
+            }
+            throw new InvalidOperationException("No hay muestras temporal validas.");
+        }
+
 
     }
 }

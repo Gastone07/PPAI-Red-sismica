@@ -27,6 +27,7 @@ namespace Controladores
         private List<CambioEstado> listadoCambiosEstado = new List<CambioEstado>();
 
         private CambioEstado cambioEstadoAbierto = new CambioEstado();
+
         #endregion
         //Paso 1 del Caso de Uso
         public controladorRegistrarResultadoRevisionManual(pantallaRegistrarResultadoRevisionManual pan)
@@ -146,30 +147,25 @@ namespace Controladores
                 [detalleMuestra1,
                 detalleMuestra2,
                 detalleMuestra3]
-            );
-            
+            );            
             var muestraSismica2 = new MuestraSismica(
                 new DateTime(2024, 6, 11, 14, 35, 0),
                 [detalleMuestra4,
                 detalleMuestra5,
                 detalleMuestra6]
             );
-
             var muestraSismica3 = new MuestraSismica(
                 new DateTime(2024, 6, 11, 14, 40, 0),
                 [detalleMuestra7,
                 detalleMuestra8,
                 detalleMuestra9]
-            );
-            
-
+            ); 
             var muestraSismica4 = new MuestraSismica(
                 new DateTime(2024, 6, 11, 14, 45, 0),
                 [detalleMuestra10,
                 detalleMuestra11,
                 detalleMuestra12]
             );
-
             var muestraSismica5 = new MuestraSismica(
                 new DateTime(2024, 8, 12, 14, 50, 0),
                 [detalleMuestra13,
@@ -258,7 +254,8 @@ namespace Controladores
                 58.3820,
                 5.2,
                 cambioEstado1,
-                estadoNoRevisado
+                estadoNoRevisado,
+                [serieTemporal1]
             ));
             eventosSismicos.Add(new EventoSismico(
                 new DateTime(2024, 6, 23, 9, 15, 0),
@@ -269,7 +266,7 @@ namespace Controladores
                 64.1895,
                 4.8,
                cambioEstado2,
-                estadoNoRevisado
+                estadoNoRevisado, [serieTemporal2, serieTemporal3]
             ));
             eventosSismicos.Add(new EventoSismico(
                 new DateTime(2024, 6, 19, 22, 5, 0),
@@ -280,7 +277,7 @@ namespace Controladores
                 60.6510,
                 6.1,
                 cambioEstado3,
-                estadoNoRevisado
+                estadoNoRevisado, null
             ));
             eventosSismicos.Add(new EventoSismico(
                 new DateTime(2024, 6, 29, 3, 50, 0),
@@ -291,7 +288,7 @@ namespace Controladores
                 65.4240,
                 5.7,
                 cambioEstado4,
-                estadoNoRevisado
+                estadoNoRevisado, null
             ));
             //evetos "revisados"
             eventosSismicos.Add(new EventoSismico(
@@ -303,7 +300,7 @@ namespace Controladores
                65.4240,
                5.7,
                cambioEstado5,
-               estadoRevisado
+               estadoRevisado, null
            ));
             eventosSismicos.Add(new EventoSismico(
                new DateTime(2025, 6, 29, 3, 50, 0),
@@ -314,7 +311,7 @@ namespace Controladores
                65.4240,
                5.7,
                cambioEstado6,
-               estadoRevisado
+               estadoRevisado, null
            ));
            
 

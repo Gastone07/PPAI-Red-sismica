@@ -18,6 +18,22 @@ namespace PPAI_REDSISMICA.Entidades
             this.detallesMuestrasSismicas = detallesMuestrasSismicas;
 
         }
+
+        public TipoDeDato getDatos()
+        {
+            if (detallesMuestrasSismicas == null || detallesMuestrasSismicas.Count == 0)
+            {
+                throw new InvalidOperationException("No hay detalles de muestra sismica asociados a la muestra.");
+            }
+            else
+            {
+                foreach (var detalle in detallesMuestrasSismicas)
+                {
+                    return detalle.getTipoDato(); // Obtiene los datos de la muestra sismica
+                }
+            }
+            throw new InvalidOperationException("No hay detalles de muestra sismica validos.");
+        }
     }
 
 }

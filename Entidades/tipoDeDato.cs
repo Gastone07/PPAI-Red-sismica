@@ -20,5 +20,14 @@ namespace PPAI_REDSISMICA.Entidades
             this.nombreUnidadMedida = nombreUnidadMedida;
             this.valorUmbral = valorUmbral;
         }
+
+        public TipoDeDato getDatos()
+        {
+            if (string.IsNullOrEmpty(denominacion) || string.IsNullOrEmpty(nombreUnidadMedida) || valorUmbral < 0)
+            {
+                throw new InvalidOperationException("Los datos del tipo de dato no son válidos.");
+            }
+            return this; // Retorna el objeto actual si los datos son válidos
+        }
     }
 }

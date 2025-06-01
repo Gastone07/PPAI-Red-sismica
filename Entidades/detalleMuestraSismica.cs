@@ -16,5 +16,14 @@ namespace PPAI_REDSISMICA.Entidades
             this.valor = valor;
             this.tipoDeDato = tipoDeDato;
         }
+
+        public TipoDeDato getTipoDato()
+        {
+            if (tipoDeDato == null)
+            {
+                throw new InvalidOperationException("No hay tipo de dato asociado a la muestra sismica.");
+            }
+            return tipoDeDato.getDatos();
+        }
     }
 }

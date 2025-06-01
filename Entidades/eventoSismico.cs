@@ -20,6 +20,8 @@ public class EventoSismico
 
     private ClasificacionSismo clasificacion;
 
+    private List<SerieTemporal>? seriesTemporales = new List<SerieTemporal>();
+
     public EventoSismico(
         DateTime fechaHoraOcurrencia,
         DateTime fechaHoraFin,
@@ -29,7 +31,8 @@ public class EventoSismico
         double longitudHipocentro,
         double valorMagnitud,
         CambioEstado cambioEstado,
-        Estado estadoActual)
+        Estado estadoActual,
+        List<SerieTemporal>? seriesTemporales)
     {
         FechaHoraOcurrencia = fechaHoraOcurrencia;
         FechaHoraFin = fechaHoraFin;
@@ -40,6 +43,7 @@ public class EventoSismico
         ValorMagnitud = valorMagnitud;
         CambioEstado = cambioEstado;
         this.estadoActual = estadoActual;
+        this.seriesTemporales = seriesTemporales;
     }
 
     public static List<EventoSismico> esPendienteDeRevision(List<EventoSismico> eventosSismicos)
@@ -86,9 +90,20 @@ public class EventoSismico
         this.clasificacion.getNombre();
     }
 
-    public void buscarSeriesTermporal()
+    public MuestraSismica buscarSeriesTermporal()
     {
-        
+        if (seriesTemporales == null || seriesTemporales.Count == 0)
+        {
+            throw new InvalidOperationException("No hay series temporales asociadas al evento sismico.");
+        }
+        else 
+        {
+            foreach (var serieTemporal in seriesTemporales)
+            {
+                 serieTemporal.getDatos(); // Obtiene los datos de la serie temporal
+            }
+        }
+        throw new InvalidOperationException("No hay series temporales validas.");
     }
 }
 
