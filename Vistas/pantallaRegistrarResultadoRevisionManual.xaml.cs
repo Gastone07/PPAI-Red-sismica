@@ -9,8 +9,8 @@ namespace Vistas
     {
         #region atributos
 
-        public controladorRegistrarResultadoRevisionManual gestor;
-        public List<EventoSismico> eventosSismicos = new List<EventoSismico>();
+        private controladorRegistrarResultadoRevisionManual gestor;
+        private List<EventoSismico> eventosSismicos = new List<EventoSismico>();
 
         #endregion
 
@@ -28,8 +28,8 @@ namespace Vistas
 
         private void btnAceptar_Click(object sender, RoutedEventArgs e)
         {
-            // Aquí puedes agregar la lógica para procesar el resultado y observaciones
-            MessageBox.Show("Resultado registrado correctamente.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+            // AquÃ­ puedes agregar la lÃ³gica para procesar el resultado y observaciones
+            MessageBox.Show("Resultado registrado correctamente.", "InformaciÃ³n", MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;
             this.Close();
         }
@@ -92,7 +92,7 @@ namespace Vistas
             string origen = txtOrigen.Text.Trim();
             string magnitudStr = txtMagnitud.Text.Trim();
 
-            // Validar campos vacíos
+            // Validar campos vacÃ­os
             if (string.IsNullOrWhiteSpace(alcance) || string.IsNullOrWhiteSpace(origen) || string.IsNullOrWhiteSpace(magnitudStr))
             {
                 MessageBox.Show("Debe completar los campos Alcance, Origen y Magnitud.", "Campos obligatorios", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -102,12 +102,12 @@ namespace Vistas
             // Validar tipo de magnitud
             if (!double.TryParse(magnitudStr, out double magnitud))
             {
-                MessageBox.Show("El campo Magnitud debe ser un número válido.", "Valor incorrecto", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("El campo Magnitud debe ser un nÃºmero vÃ¡lido.", "Valor incorrecto", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Aquí puedes usar los valores como necesites, por ejemplo:
-            MessageBox.Show($"Opción: {opcionSeleccionada}\nAlcance: {alcance}\nOrigen: {origen}\nMagnitud: {magnitud}", "Valores seleccionados");
+            // AquÃ­ puedes usar los valores como necesites, por ejemplo:
+            MessageBox.Show($"OpciÃ³n: {opcionSeleccionada}\nAlcance: {alcance}\nOrigen: {origen}\nMagnitud: {magnitud}", "Valores seleccionados");
 
             gestor.tomarOpcionGrilla(opcionSeleccionada, alcance, origen, magnitud);
         }
