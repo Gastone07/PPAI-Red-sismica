@@ -8,8 +8,8 @@ namespace PPAI_REDSISMICA.Entidades
 {
     public class Estado
     {
-        public string ambito { get; set; }
-        public string nombreEstado { get; set; }
+        private string ambito { get; set; }
+        private string nombreEstado { get; set; }
 
         public Estado(string ambito, string nombreEstado)
         {
