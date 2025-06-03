@@ -8,7 +8,7 @@ namespace PPAI_REDSISMICA.Entidades
 {
     public class MuestraSismica
     {
-        public DateTime fechaHoraMuestra { get; set; }
+        private DateTime fechaHoraMuestra { get; set; }
 
         private List<DetalleMuestraSismica> detallesMuestrasSismicas = new List<DetalleMuestraSismica>();
 
