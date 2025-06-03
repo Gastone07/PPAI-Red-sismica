@@ -8,9 +8,9 @@ namespace PPAI_REDSISMICA.Entidades
 {
     public class Usuario
     {
-        public string contraseña { get; set; }
+        private string contraseña { get; set; }
 
-        public string nombreUsuario { get; set; }
+        private string nombreUsuario { get; set; }
 
         public Usuario(string nombreUsuario, string contraseña)
         {
